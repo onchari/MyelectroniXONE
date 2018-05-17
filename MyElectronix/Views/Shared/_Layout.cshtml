@@ -24,15 +24,31 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                  
+                    <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "Admin" }, null)</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
+    <div class="container body-content" style="background-color:beige;">
+        <div class="row">
+            <div class="col-md-3">
+                <h2>Getting started</h2>
+                <p>
+                    ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                    enables a clean separation of concerns and gives you full control over markup
+                    for enjoyable, agile development.
+                </p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+
+        </div>
+       
+        <footer class="footer">
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
