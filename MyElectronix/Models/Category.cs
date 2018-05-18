@@ -7,5 +7,6 @@ namespace MyElectronix.Models
 {
     public class Category
     {
+        public int CategoryId { get; set; }
     }
 }

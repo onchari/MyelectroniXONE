@@ -1,8 +1,6 @@
-﻿using MyElectronix.Models;
+﻿using MyElectronix.Areas.Admin.Models;
+using MyElectronix.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MyElectronix.Areas.Admin.Controllers
@@ -12,17 +10,19 @@ namespace MyElectronix.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
-        // GET: Admin/Category
-        public ActionResult Index()
-        {
-            return View(db.Categories.ToList());
-        }
-
-
 
         public ActionResult Create()
         {
+           return View();
+        }
+
+        
+
+        public ActionResult Index()
+        {
             return View();
         }
+
+       
     }
 }
