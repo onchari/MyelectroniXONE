@@ -197,20 +197,27 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
-    <Compile Include="Areas\Admin\Models\Category.cs" />
+    <Compile Include="Areas\Admin\Models\CategoryModels\Category.cs" />
+    <Compile Include="Areas\Admin\Models\CategoryModels\CreateEditCategoryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\IActionModelling.cs" />
     <Compile Include="Areas\Admin\Models\Item.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TestModelsController.cs" />
+    <Compile Include="Extensions\NotificationExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805201751075_Initial.cs" />
+    <Compile Include="Migrations\201805201751075_Initial.Designer.cs">
+      <DependentUpon>201805201751075_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
-    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SubTest.cs" />
@@ -236,12 +243,8 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Category\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Category\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Category\D.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_CreateEditCategory.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -292,9 +295,11 @@
     <Content Include="Views\TestModels\Details.cshtml" />
     <Content Include="Views\TestModels\Edit.cshtml" />
     <Content Include="Views\TestModels\Index.cshtml" />
+    <Content Include="Views\Shared\_Notifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -308,6 +313,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201805201751075_Initial.resx">
+      <DependentUpon>201805201751075_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

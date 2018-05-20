@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MyElectronix.Areas.Admin.Models;
 
 namespace MyElectronix.Models
 {
