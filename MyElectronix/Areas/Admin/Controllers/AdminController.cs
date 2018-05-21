@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 namespace MyElectronix.Areas.Admin.Controllers
 {
+    [RouteArea("Admin")]
+    [Route("admin/[controller]")]
     public class AdminController : Controller
     {
         // GET: Admin/Admin

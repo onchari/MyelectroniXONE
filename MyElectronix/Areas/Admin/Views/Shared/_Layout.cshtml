@@ -26,15 +26,28 @@
                                 <table class="table">
                                     <tr>
                                         <td>
-                                           
+
                                             <span class=" glyphicon glyphicon-list-alt text-primary"></span>
-                                            <a href="@Url.Action("Index", "Category")">View Categories</a>
+                                            <a href="@Url.Action("Index", "Category")">View All Categories</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <span class="glyphicon glyphicon-plus text-success"></span>
                                             <a href="@Url.Action("Create","Category")">Create Category</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="glyphicon glyphicon-pencil text-success"></span>
+                                            <a href="@Url.Action("Edit","Category")">Edit Category</a>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <span class="glyphicon glyphicon-trash text-success"></span>
+                                            <a href="@Url.Action("Delete","Category")">Delete Category</a>
                                         </td>
                                     </tr>
                                     <tr>

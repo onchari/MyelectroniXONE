@@ -3,6 +3,9 @@ using MyElectronix.Areas.Admin.Models.CategoryModels;
 using MyElectronix.Extensions;
 using MyElectronix.Models;
 using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace MyElectronix.Areas.Admin.Controllers
@@ -11,7 +14,40 @@ namespace MyElectronix.Areas.Admin.Controllers
     [Route("admin/[controller]")]
     public class CategoryController : BaseController
     {
-       
+        public ActionResult Index()
+        {
+            return View(db.Categories.ToList());
+        }
+
+        //GET : 
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var model = db.Categories.Find(id);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit( Category model)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(model).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
 
         public ActionResult Create()
         {
@@ -54,25 +90,27 @@ namespace MyElectronix.Areas.Admin.Controllers
             throw new NotImplementedException();
         }
 
+        //GET : 
         public ActionResult Details(int? id)
         {
-            throw new NotImplementedException();
+           if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var model = db.Categories.Find(id);
+            if(model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
         }
 
-        public ActionResult Edit(int? id)
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        public ActionResult Edit([Bind(Include = "")] object modelClassEntity)
-        {
-            throw new NotImplementedException();
-        }
+       
 
-        public ActionResult Index()
-        {
-            return View();
-        }
+       
 
        
     }
