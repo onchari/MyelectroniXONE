@@ -1,4 +1,5 @@
 ﻿using MyElectronix.Areas.Admin.Models;
+using MyElectronix.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,8 @@ namespace MyElectronix.Areas.Admin.Controllers
                 this.db.Categories.Add(cat);
                 db.SaveChanges();
                 //Display Notification message "Category created"
+                
+                this.AddNotification($"'{model.CategoryName} Category' Has been created successfully.", NotificationType.SUCCESS);
                 return RedirectToAction("Index");
             }
             return View(model);
