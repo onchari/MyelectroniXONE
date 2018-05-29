@@ -6,111 +6,119 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using MyElectronix.Areas.Admin.Models;
 using MyElectronix.Models;
 
-namespace MyElectronix.Controllers
+namespace MyElectronix.Areas.Admin.Controllers
 {
-    public class TestModelsController : Controller
+    [RouteArea("Admin")]
+    [Route("admin/[controller]")]
+    public class StudentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: TestModels
+        // GET: Admin/Students
         public ActionResult Index()
         {
-            return View(db.TestModels.ToList());
+            var students = db.Students.Include(s => s.TestClass);
+            return View(students.ToList());
         }
 
-        // GET: TestModels/Details/5
+        // GET: Admin/Students/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TestModel testModel = db.TestModels.Find(id);
-            if (testModel == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(testModel);
+            return View(student);
         }
 
-        // GET: TestModels/Create
+        // GET: Admin/Students/Create
         public ActionResult Create()
         {
+            ViewBag.TestClassId = new SelectList(db.TestClasses, "TestClassId", "Name");
             return View();
         }
 
-        // POST: TestModels/Create
+        // POST: Admin/Students/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TestModelId,Name")] TestModel testModel)
+        public ActionResult Create([Bind(Include = "StudentId,Name,TestClassId")] Student student)
         {
             if (ModelState.IsValid)
             {
-                db.TestModels.Add(testModel);
+                db.Students.Add(student);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(testModel);
+            ViewBag.TestClassId = new SelectList(db.TestClasses, "TestClassId", "Name", student.TestClassId);
+            return View(student);
         }
 
-        // GET: TestModels/Edit/5
+        // GET: Admin/Students/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TestModel testModel = db.TestModels.Find(id);
-            if (testModel == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(testModel);
+            ViewBag.TestClassId = new SelectList(db.TestClasses, "TestClassId", "Name", student.TestClassId);
+            return View(student);
         }
 
-        // POST: TestModels/Edit/5
+        // POST: Admin/Students/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TestModelId,Name")] TestModel testModel)
+        public ActionResult Edit([Bind(Include = "StudentId,Name,TestClassId")] Student student)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(testModel).State = EntityState.Modified;
+                db.Entry(student).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(testModel);
+            ViewBag.TestClassId = new SelectList(db.TestClasses, "TestClassId", "Name", student.TestClassId);
+            return View(student);
         }
 
-        // GET: TestModels/Delete/5
+        // GET: Admin/Students/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TestModel testModel = db.TestModels.Find(id);
-            if (testModel == null)
+            Student student = db.Students.Find(id);
+            if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(testModel);
+            return View(student);
         }
 
-        // POST: TestModels/Delete/5
+        // POST: Admin/Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TestModel testModel = db.TestModels.Find(id);
-            db.TestModels.Remove(testModel);
+            Student student = db.Students.Find(id);
+            db.Students.Remove(student);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

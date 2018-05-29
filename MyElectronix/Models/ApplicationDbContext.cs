@@ -17,7 +17,9 @@ namespace MyElectronix.Models
         }
 
         public DbSet<Category> Categories { get; set; }
-        public DbSet<TestModel> TestModels { get; set; }
-        public DbSet<SubTest> SubTests { get; set; }
+
+        public System.Data.Entity.DbSet<MyElectronix.Areas.Admin.Models.TestClass> TestClasses { get; set; }
+
+        public System.Data.Entity.DbSet<MyElectronix.Areas.Admin.Models.Student> Students { get; set; }
     }
 }
