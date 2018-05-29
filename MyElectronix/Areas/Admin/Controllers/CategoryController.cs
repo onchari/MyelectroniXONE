@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyElectronix.Areas.Admin.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,9 +24,31 @@ namespace MyElectronix.Areas.Admin.Controllers
             return View(categories.ToList());
         }
 
+
         public ActionResult Create()
         {
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CategoryViewModel model)
+        {
+            if(model != null && this.ModelState.IsValid)
+            {
+                var cat = new Category
+                {
+                    CategoryName = model.CategoryName,
+                    CategoryDescription = model.CategoryDescription,
+                    IsActive = model.IsActive
+                };
+                this.db.Categories.Add(cat);
+                db.SaveChanges();
+                //Display Notification message "Category created"
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
     }
 }
