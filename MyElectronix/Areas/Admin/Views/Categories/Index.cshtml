@@ -1,11 +1,11 @@
-﻿@model IEnumerable<MyElectronix.Areas.Admin.CategoryViewModel>
+﻿@model IEnumerable<MyElectronix.Areas.Admin.Models.Category>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>All Categories</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,9 +13,11 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.MainCategory.MainCategoryName)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.CategoryName)
         </th>
-
         <th>
             @Html.DisplayNameFor(model => model.CategoryDescription)
         </th>
@@ -26,23 +28,23 @@
     </tr>
 
 @foreach (var item in Model) {
-    var IsActive = item.IsActive ? "YES" : "NO";
-
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MainCategory.MainCategoryName)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.CategoryName)
         </td>
-
         <td>
             @Html.DisplayFor(modelItem => item.CategoryDescription)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => IsActive)
+            @Html.DisplayFor(modelItem => item.IsActive)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { id=item.CategoryId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CategoryId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CategoryId })
         </td>
     </tr>
 }

@@ -7,13 +7,13 @@ namespace MyElectronix.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class _00001hgj : IMigrationMetadata
+    public sealed partial class _5g : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_00001hgj));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_5g));
         
         string IMigrationMetadata.Id
         {
-            get { return "201805291811447_00001hgj"; }
+            get { return "201806020726325_5g"; }
         }
         
         string IMigrationMetadata.Source

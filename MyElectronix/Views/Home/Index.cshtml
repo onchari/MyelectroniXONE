@@ -1,7 +1,129 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model PagedList.IPagedList<MyElectronix.Areas.Admin.Models.Product>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        $(".AddLink").click(function () {
+
+            var recordToAdd = $(this).attr("data-id");
+            if (recordToAdd != '') {
+                $.post("/ShoppingCart/AddToCart", { "id": recordToAdd },
+                    function (data) {
+                        $('#cart-status').text(data.CartCount);
+                    });
+            }
+        });
+    });
+</script>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div aria-hidden="true" class="alert alert-dismissable alert-success">
+        <button type="button" class="close" data-dismiss="alert">
+            X
+        </button>
+        <strong>
+            An item was added to your cart.
+        </strong>
+        To check out now simply<a href="#" class="alert-link">Click here...</a>
+    </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Confirm Checkout</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Would you like to check out or keep shopping?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Continue</button>
+                <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("index","ShoppingCart")'">Checkout</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+<h2>Order some items</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="bs-docs-section">
+    <div class="row">
+        @using (Html.BeginForm("Index", "Items", FormMethod.Get))
+        {
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Find: </span>
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <span class="input-group-btn">
+                        <input type="submit" class="btn btn-info btn-sm" value="Search" />
+                    </span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+           Category
+        </th>
+        <th>
+           Item Name
+        </th>
+        <th>
+           Unit price
+        </th>
+        <th>
+           Brand
+        </th>
+        <th>
+           Description
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductUnitPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductBrand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductDescription)
+        </td>
+        <td>
+           <a href="#" class="AddLink" data-id="@item.ProductId" data-toggle="modal" data-target="#myModal">
+               Add to cart
+           </a>
+            <!--@Html.ActionLink("Add To cart", "AddToCart", "ShoppingCart", new { id = item.ProductId}, new { htmlAttributes = new { @data_toggle = "modal", @data_target = "#myModal" } })-->|
+            @Html.ActionLink("Details", "Details", new { id = item.ProductId})
+            @if(Request.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId})
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId})
+            }
+        </td>
+    </tr>
 }
 
-
-
-<h1>Index</h1>
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))

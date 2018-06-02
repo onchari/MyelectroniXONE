@@ -1,0 +1,93 @@
+﻿@model MyElectronix.ViewModel.ShoppingCartViewModel
+
+@{
+    ViewBag.Title = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function ()
+    {
+        $(".RemoveLink").click(function ()
+        {
+            var recordToDelete = $(this).attr("data-id");
+            if (recordToDelete != '') {
+                $.post("/ShoppingCart/RemoveFromCart", { "id": recordToDelete },
+                    function (data) {
+                        if (data.ItemCount == 0) {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                        } else {
+                            $("#item-count-" + data.DeleteId).text(data.ItemCount)
+                        }
+                        $('#cart-total').text(data.CartTotal);
+                        $('#update-message').text(data.Message);
+                        $('#cart-status').text('Cart(' + data.CartCount + ')');
+                    });
+            }
+        });
+    });
+</script>
+
+<h3>
+    <em>Review</em> your cart:
+</h3>
+<p class="button">
+    @Html.ActionLink("Checkout>>", "AddressAndPayment", "Checkout")
+</p>
+<div id="update-message">
+
+</div>
+
+
+<table class="table">
+    <tr>
+        <th>
+           Product Name
+        </th>
+        <th>
+            Price (each)
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @{ 
+        var model = Model.CartItems;
+    }
+@foreach (var item in model) {
+    <tr id="row-@item.RecordId">
+        <td>
+            @Html.ActionLink(item.Product.ProductName, "Details", "Store", new { id = item.ProductId}, null)
+        </td>
+        <td>
+            @item.Product.ProductUnitPrice
+        </td>
+        <td id="item-count-@item.RecordId">
+            @item.Count
+        </td>
+        <td>
+            <a href="#" class="RemoveLink" data-id="@item.RecordId">Remove from cart</a>
+        </td>
+    </tr>
+}
+    <tr>
+        <td>
+            Total
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td id="cart-total">
+            @Model.CartTotal
+        </td>
+    </tr>
+
+</table>

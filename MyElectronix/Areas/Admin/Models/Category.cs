@@ -1,9 +1,7 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
+
 
 namespace MyElectronix.Areas.Admin.Models
 {
@@ -17,8 +15,12 @@ namespace MyElectronix.Areas.Admin.Models
 
         public string CategoryDescription { get; set; }
 
-        public virtual ICollection<Products> Products{ get; set; }
+        public ICollection<Product> Products{ get; set; }
 
         public bool IsActive { get; set; } = true;
+
+        public int MainCategoryId { get; set; }
+
+        public MainCategory MainCategory { get; set; }
     }
 }
